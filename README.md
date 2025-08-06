@@ -54,7 +54,7 @@ A disciplina de **Banco de Dados** abordou os principais fundamentos da modelage
 ## 🧑‍💻 Desenvolvido por
 
 **João Manuel Cesário de Jesus Oliveira**  
-💼 Estudante de Análise e Desenvolvimento de Sistemas — IFSP  
+💼 Estudante de Informática para Internet — IFSP  
 📍 São Paulo, Brasil
 
 ---
