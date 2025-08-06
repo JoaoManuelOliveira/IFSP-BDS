@@ -1,0 +1,95 @@
+#7
+select B.nome as Bairro, count(C.idCliente) as cliente from Bairro B
+join Endereco E on B.idBairro = E.idBairro
+join Cliente C on E.idEndereco = C.idEndereco
+group by B.idBairro
+having count(C.idCliente) > 5;
+
+#8
+select nome, dataContratacao
+from Funcionario
+where dataContratacao >= CURDATE() - interval 30 day;
+
+#9
+select C.nome as Cliente, Co.valorTotalCompra as Compra
+from Cliente C
+join Compra Co on Co.idCliente = C.idCliente
+where Co.finalizada = 1;
+
+#10
+select 
+    p.idProduto,
+    p.nome as nomeProduto,
+    coalesce(SUM(ic.quantidade), 0) as quantidadeVendida
+from 
+    Produto p
+left join 
+    ItemCompra ic on p.idProduto = ic.idProduto
+group by
+    p.idProduto, p.nome
+order by
+    p.nome;
+    
+#11
+select 
+    f.idFuncionario,
+    f.nome as nomeFuncionario,
+    f.dataDemissao
+from 
+    Funcionario f
+order by 
+    f.idFuncionario;
+    
+#12
+select nome, idade
+from cliente
+where year(curdate()) - year(dataNascimento) = idade
+  and month(curdate()) = month(dataNascimento) 
+union
+select nome, idade
+from funcionario
+where year(curdate()) - year(dataNascimento) = idade
+  and month(curdate()) = month(dataNascimento);
+
+#13
+select 
+    p.idProduto, 
+    p.nome, 
+    sum(ic.quantidade) as total_vendido
+from ItemCompra ic
+join Compra c on ic.idCompra = c.idCompra
+join Produto p on ic.idProduto = p.idProduto
+where c.dataCompra >= date_sub(curdate(), interval 6 month)
+group by p.idProduto, p.nome
+order by total_vendido desc;
+
+
+
+
+
+#14
+select f.nomeFornecedor, SUM(p.quantidade) as total_produtos
+from Fornecedor f
+join Produto p on f.idFornecedor = p.idFornecedor
+group by f.idFornecedor
+having SUM(p.quantidade) > 10;
+
+#15
+select p.nome as produto, 
+       coalesce(c.nome, 'sem categoria') as categoria
+from produto p
+left join categoria c on p.idcategoria = c.idcategoria;
+
+#16
+alter table Produto
+add column dataValidade date;
+select nome, dataValidade
+from Produto
+where dataValidade BETWEEN CURRENT_DATE AND CURRENT_DATE + interval '30' day;
+
+#virs 3
+select f.nome, s.nome
+from funcionario f
+left join funcionario s on s.idFuncionario = f.idSupervisor;
+
+
